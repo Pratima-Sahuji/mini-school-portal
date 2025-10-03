@@ -15,7 +15,7 @@ The Mini School Portal is a **full-stack web application** designed to manage sc
 
 ---
 
-## 🎯 Features
+##  Features
 
 * **Student Dashboard**: View personal information.
 * **Teacher Dashboard**: View all students, edit or delete student records, and mark attendance.
