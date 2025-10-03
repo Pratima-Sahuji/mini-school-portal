@@ -32,9 +32,8 @@ function Signup() {
         
 
     try {
-      const res = await axios.post(
-        "https://mini-school-portal-backend.onrender.com/api/user/signup",
-        form,
+      
+        const res = await axios.post("/api/user/signup", form, { withCredentials: true });
   
       );
 
