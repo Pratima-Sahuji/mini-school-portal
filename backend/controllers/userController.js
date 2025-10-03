@@ -14,8 +14,8 @@ const signup = async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const result = await db.query(
-      'INSERT INTO users (name, email, password, role) VALUES ($1, $2, $3, $4) RETURNING id, name, email, role',
-      [name, email, hashedPassword, role || 'Student']
+      'INSERT INTO users (name, email, password_hashed, role) VALUES ($1, $2, $3, $4) RETURNING id, name, email, role',
+      [name, email, hashedPassword, role || 'student']
     );
 
     res.status(201).json({ user: result.rows[0] });
