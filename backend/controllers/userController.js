@@ -2,81 +2,107 @@ const bcrypt = require("bcryptjs");
 const db = require("../db");
 const jwt = require("jsonwebtoken");
 
+// backend/controllers/userController.js
+import db from '../db.js';
+import bcrypt from 'bcrypt';
 
-const signup = async (req, res) => {
-  const { name, email, password, role, studentClass, rollNumber, subject } = req.body;
-
+export async function signup(req, res) {
   try {
+    const { name, email, password, role } = req.body;
 
-    const userCheck = await db.query("SELECT * FROM users WHERE email = $1", [email]);
-    if (userCheck.rows.length > 0) {
-      return res.status(400).json({ message: "User already exists" });
+    if (!name || !email || !password) {
+      return res.status(400).json({ message: 'Missing required fields' });
     }
 
+    const hashedPassword = await bcrypt.hash(password, 10);
 
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(password, salt);
-
-  
-    const newUser = await db.query(
-      `INSERT INTO users (name, email, password_hash, role)
-       VALUES ($1, $2, $3, $4) RETURNING *`,
-      [name, email, hashedPassword, role]
+    const result = await db.query(
+      'INSERT INTO users (name, email, password, role) VALUES ($1, $2, $3, $4) RETURNING id, name, email, role',
+      [name, email, hashedPassword, role || 'Student']
     );
 
-    const userId = newUser.rows[0].id;
+    res.status(201).json({ user: result.rows[0] });
+  } catch (err) {
+    console.error('Signup error:', err);
+    res.status(500).json({ message: 'Internal server error', error: err.message });
+  }
+}
+
+
+// const signup = async (req, res) => {
+//   const { name, email, password, role, studentClass, rollNumber, subject } = req.body;
+
+//   try {
+
+//     const userCheck = await db.query("SELECT * FROM users WHERE email = $1", [email]);
+//     if (userCheck.rows.length > 0) {
+//       return res.status(400).json({ message: "User already exists" });
+//     }
+
+
+//     const salt = await bcrypt.genSalt(10);
+//     const hashedPassword = await bcrypt.hash(password, salt);
+
+  
+//     const newUser = await db.query(
+//       `INSERT INTO users (name, email, password_hash, role)
+//        VALUES ($1, $2, $3, $4) RETURNING *`,
+//       [name, email, hashedPassword, role]
+//     );
+
+//     const userId = newUser.rows[0].id;
 
  
-    if (role === "student") {
-      await db.query(
-        `INSERT INTO students (user_id, class, roll_number) VALUES ($1, $2, $3)`,
-        [userId, studentClass, rollNumber]
-      );
-    }
+//     if (role === "student") {
+//       await db.query(
+//         `INSERT INTO students (user_id, class, roll_number) VALUES ($1, $2, $3)`,
+//         [userId, studentClass, rollNumber]
+//       );
+//     }
 
  
-    if (role === "teacher") {
-      await db.query(
-        `INSERT INTO teachers (user_id, subject) VALUES ($1, $2)`,
-        [userId, subject || null]
-      );
-    }
+//     if (role === "teacher") {
+//       await db.query(
+//         `INSERT INTO teachers (user_id, subject) VALUES ($1, $2)`,
+//         [userId, subject || null]
+//       );
+//     }
 
-    const userForToken = {
-  id: newUser.rows[0].id,
-  role: newUser.rows[0].role
-};
-const { accessToken, refreshToken } = generateTokens(userForToken);
-
-
+//     const userForToken = {
+//   id: newUser.rows[0].id,
+//   role: newUser.rows[0].role
+// };
+// const { accessToken, refreshToken } = generateTokens(userForToken);
 
 
 
-    res.cookie("refreshToken", refreshToken, {
-      httpOnly: true,
-      secure: true,
-      sameSite: "none",
+
+
+//     res.cookie("refreshToken", refreshToken, {
+//       httpOnly: true,
+//       secure: true,
+//       sameSite: "none",
  
-    });
+//     });
 
    
-    res.status(201).json({
-       message: "User registered successfully",
-       user: {
-       id: newUser.rows[0].id,
-       name: newUser.rows[0].name,
-       email: newUser.rows[0].email,
-       role: newUser.rows[0].role
-      },
-      accessToken
-   });
+//     res.status(201).json({
+//        message: "User registered successfully",
+//        user: {
+//        id: newUser.rows[0].id,
+//        name: newUser.rows[0].name,
+//        email: newUser.rows[0].email,
+//        role: newUser.rows[0].role
+//       },
+//       accessToken
+//    });
 
 
-  } catch (err) {
-    console.error("Signup error:", err);
-    res.status(500).json({ message: "Server error" });
-  }
-};
+//   } catch (err) {
+//     console.error("Signup error:", err);
+//     res.status(500).json({ message: "Server error" });
+//   }
+// };
 
 
 const generateTokens = (user) => {
