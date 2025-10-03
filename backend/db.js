@@ -16,18 +16,14 @@
 // console.log(result.rows);
 
 // backend/db.js
-import pkg from 'pg';
-const { Pool } = pkg;
+// db.js
+const { Pool } = require('pg');
 
-// Create a connection pool using your DATABASE_URL from Render
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
-  ssl: {
-    rejectUnauthorized: false, // Required for Render Postgres
-  },
+  ssl: { rejectUnauthorized: false }, // required for Render Postgres
 });
 
-// Export a query function you can use in controllers
-export default {
+module.exports = {
   query: (text, params) => pool.query(text, params),
 };
