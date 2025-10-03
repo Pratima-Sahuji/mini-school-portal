@@ -19,7 +19,7 @@ function TeacherDashboard() {
         }
 
         const res = await axios.get(
-          `https://mini-school-portal-backend.onrender.com/api/teachers/${user.id}`,
+          `/api/teachers/${user.id}`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
