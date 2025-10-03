@@ -15,19 +15,19 @@
 // const result = await db.query('SELECT * FROM users');
 // console.log(result.rows);
 
+// backend/db.js
 import pkg from 'pg';
 const { Pool } = pkg;
 
+// Create a connection pool using your DATABASE_URL from Render
 const pool = new Pool({
-  user: process.env.DB_USER,
-  host: process.env.DB_HOST,
-  database: process.env.DB_NAME,
-  password: process.env.DB_PASSWORD,
-  port: process.env.DB_PORT || 5432,
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false, // Required for Render Postgres
+  },
 });
 
-pool.connect()
-  .then(() => console.log("Postgres connected"))
-  .catch((err) => console.error("Postgres connection error:", err));
-
-export default pool;
+// Export a query function you can use in controllers
+export default {
+  query: (text, params) => pool.query(text, params),
+};
