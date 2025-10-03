@@ -33,7 +33,7 @@ function Signup() {
 
     try {
       const res = await axios.post(
-        "https://mini-school-portal-backend.onrender.com/user/signup",
+        "/api/user/signup",
         form,
         { withCredentials: true }
       );
@@ -43,7 +43,7 @@ function Signup() {
 
 
 
-      // Direct navigation based on role
+      
       if (res.data.user.role.toLowerCase() === "student") navigate("/student-dashboard");
        else navigate("/teacher-dashboard");
 
