@@ -11,7 +11,7 @@ function TeacherAttendance() {
 
   const fetchStudents = async () => {
     try {
-      const res = await axios.get("https://mini-school-portal-backend.onrender.com/api/students", {
+      const res = await axios.get("/api/students", {
         headers: { Authorization: `Bearer ${token}` },
       });
       setStudents(res.data);
@@ -36,7 +36,7 @@ function TeacherAttendance() {
         if (!status) continue; 
 
         await axios.post(
-          "https://mini-school-portal-backend.onrender.com/api/attendance/",
+          "/api/attendance/",
           {
             student_id: student.id,
             date: new Date().toISOString().split("T")[0], 
