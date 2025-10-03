@@ -23,7 +23,7 @@ function TeacherStudents() {
         return;
       }
 
-      const res = await axios.get("https://mini-school-portal-backend.onrender.com/api/students", {
+      const res = await axios.get("/api/students", {
         headers: { Authorization: `Bearer ${token}` },
       });
 
@@ -39,7 +39,7 @@ function TeacherStudents() {
 
     try {
       const token = localStorage.getItem("accessToken");
-      await axios.delete(`https://mini-school-portal-backend.onrender.com/api/students/${id}`, {
+      await axios.delete(`/api/students/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       alert("Student deleted successfully");
