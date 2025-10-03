@@ -7,11 +7,13 @@ export default defineConfig({
   base: "./",
   server: {
     proxy: {
-      '/api' :{ 
-        target : https://mini-school-portal-backend.onrender.com,
-      changeOrigin: true,
-      secure: true
-      }
+       '/api' :{ 
+       target : https://mini-school-portal-backend.onrender.com,
+       changeOrigin: true,
+       secure: true
+       }
+    }
+
     },
   },
 })
