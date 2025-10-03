@@ -16,7 +16,7 @@ function Navbar() {
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
       <div className="container">
-        <Link className="navbar-brand" to="https://mini-school-portal-backend.onrender.com/">Mini School Portal</Link>
+        <Link className="navbar-brand" to="/api/">Mini School Portal</Link>
         <div className="collapse navbar-collapse">
           <ul className="navbar-nav ms-auto">
             <li className="nav-item">
