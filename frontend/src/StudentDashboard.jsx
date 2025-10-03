@@ -41,7 +41,7 @@ function StudentDashboard() {
 
   return (
     <div className="container mt-5">
-      <h2>Welcome, {student.name} 👋</h2>
+      <h2>Welcome, {student.name} </h2>
       <div className="card shadow p-4 mt-4">
         <h4>Profile Details</h4>
         <p><strong>Name:</strong> {student.name}</p>
