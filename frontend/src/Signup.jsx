@@ -292,7 +292,7 @@ function Signup() {
             />
           )}
 
-          <button type="submit" className="btn btn-primary w-100">
+          <button type="submit" onClick={() => handleSubmit } className="btn btn-primary w-100">
             Sign Up
           </button>
         </form>
