@@ -12,7 +12,7 @@ const cors = require("cors");
 
 dotenv.config();
 const app = express();
-app.use(cors({ origin: "https://mini-school-portal-backend.onrender.com", credentials: true }));
+app.use(cors({ origin: "https://mini-school-portal-frontend.onrender.com", credentials: true }));
 
 app.use(express.json());
 app.use(cookieParser());
