@@ -3,5 +3,13 @@ import react from '@vitejs/plugin-react'
 
 export default defineConfig({
   plugins: [react()],
-  base: "./",  // keeps assets relative
+  server: {
+    proxy: {
+      '/api': {
+        target: 'https://mini-school-portal-backend.onrender.com',
+        changeOrigin: true,
+        secure: true,
+      },
+    },
+  },
 })
