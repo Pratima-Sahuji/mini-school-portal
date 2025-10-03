@@ -20,7 +20,7 @@ function EditStudent() {
   const fetchStudent = async () => {
     try {
       const token = localStorage.getItem("accessToken");
-      const res = await axios.get(`http://localhost:5000/api/students/${id}`, {
+      const res = await axios.get(`https://mini-school-portal-backend.onrender.com/api/students/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setForm(res.data);
@@ -40,7 +40,7 @@ function EditStudent() {
     e.preventDefault();
     try {
       const token = localStorage.getItem("accessToken");
-      await axios.put(`http://localhost:5000/api/students/${id}`, form, {
+      await axios.put(`https://mini-school-portal-backend.onrender.com/api/students/${id}`, form, {
         headers: { Authorization: `Bearer ${token}` },
       });
       alert("Student updated successfully");
