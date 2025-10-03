@@ -35,7 +35,7 @@ function Signup() {
       const res = await axios.post(
         "/api/user/signup",
         form,
-        { withCredentials: true }
+  
       );
 
       localStorage.setItem("user", JSON.stringify(res.data.user));
