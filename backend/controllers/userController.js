@@ -3,7 +3,7 @@ const db = require("../db");
 const jwt = require("jsonwebtoken");
 
 
-export async function signup(req, res) {
+const signup = async (req, res) => {
   try {
     const { name, email, password, role } = req.body;
 
