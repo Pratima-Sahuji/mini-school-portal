@@ -104,10 +104,5 @@ To contribute:
 
 ---
 
-##  License
 
-MIT License
 
----
-
-Do you want me to do that?
