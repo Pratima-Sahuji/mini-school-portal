@@ -2,9 +2,6 @@ const bcrypt = require("bcryptjs");
 const db = require("../db");
 const jwt = require("jsonwebtoken");
 
-// backend/controllers/userController.js
-import db from '../db.js';
-import bcrypt from 'bcrypt';
 
 export async function signup(req, res) {
   try {
