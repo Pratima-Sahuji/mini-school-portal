@@ -25,7 +25,7 @@ function StudentDashboard() {
         return;
       }
 
-      const res = await axios.get(`https://mini-school-portal-backend.onrender.com/api/students/${user.id}`, {
+      const res = await axios.get(`/api/students/${user.id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
