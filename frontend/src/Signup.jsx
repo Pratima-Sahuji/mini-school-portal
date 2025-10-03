@@ -33,7 +33,7 @@ function Signup() {
 
     try {
       const res = await axios.post(
-        "https://mini-school-portal-frontend.onrender.com/api/user/signup",
+        "https://mini-school-portal-backend.onrender.com/api/user/signup",
         form,
   
       );
