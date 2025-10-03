@@ -63,11 +63,7 @@ function TeacherDashboard() {
           Mark Attendance
         </button>
       </div>
-      <button
-          className="btn btn-success mt-3"
-          onClick={() => navigate("/teacher/attendance")}
-      > Mark Attendance
-      </button>
+     
 
       
     </div>

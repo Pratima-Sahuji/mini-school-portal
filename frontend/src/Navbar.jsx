@@ -19,28 +19,6 @@ function Navbar() {
         <Link className="navbar-brand" to="/">Mini School Portal</Link>
         <div className="collapse navbar-collapse">
           <ul className="navbar-nav ms-auto">
-            {/* {user.role === "student" && (
-              <>
-                <li className="nav-item">
-                  <Link className="nav-link" to="/student/dashboard">Dashboard</Link>
-                </li>
-                <li className="nav-item">
-                  <Link className="nav-link" to="/student/profile">Profile</Link>
-                </li>
-              </>
-            )} */}
-
-            {user.role === "teacher" && (
-              <>
-                <li className="nav-item">
-                  <Link className="nav-link" to="/teacher/students">All Students</Link>
-                </li>
-                <li className="nav-item">
-                  <Link className="nav-link" to="/teacher/attendance">Mark Attendance</Link>
-                </li>
-              </>
-            )}
-
             <li className="nav-item">
               <button className="btn btn-danger ms-3" onClick={handleLogout}>Logout</button>
             </li>
