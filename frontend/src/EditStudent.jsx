@@ -20,6 +20,15 @@ function EditStudent() {
   const fetchStudent = async () => {
     try {
       const token = localStorage.getItem("accessToken");
+      const userData = localStorage.getItem("user");
+      const user = userData ? JSON.parse(userData) : null;
+      
+      if (!user || !token) {
+        console.log("User not authenticated");
+        navigate("/login");
+        return;
+      }
+      
       const res = await axios.get(`/api/students/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });

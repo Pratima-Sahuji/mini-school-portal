@@ -21,7 +21,7 @@ function StudentDashboard() {
       const token = localStorage.getItem("accessToken");
 
       if (!user || !token || user.role !== "student") {
-        console.log(error);
+        console.log("User not authenticated or not a student");
         navigate("/login");
         return;
       }
