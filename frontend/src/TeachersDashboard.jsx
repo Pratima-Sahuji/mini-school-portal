@@ -15,6 +15,7 @@ function TeacherDashboard() {
         const token = localStorage.getItem("accessToken");
 
         if (!user || !token) {
+          console.log("User not authenticated");
           navigate("/login"); 
           return;
         }

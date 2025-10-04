@@ -7,6 +7,17 @@ function TeacherAttendance() {
   const [message, setMessage] = useState("");
 
   const token = localStorage.getItem("accessToken");
+  
+  // Check if user is authenticated
+  useEffect(() => {
+    const userData = localStorage.getItem("user");
+    const user = userData ? JSON.parse(userData) : null;
+    
+    if (!user || !token) {
+      console.log("User not authenticated");
+      return;
+    }
+  }, [token]);
 
 
   const fetchStudents = async () => {
