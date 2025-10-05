@@ -15,7 +15,8 @@ function Login() {
     e.preventDefault();
     try {
       const res = await api.post("/api/user/login", form, { withCredentials: true });
-      
+
+        if (res.data?.accessToken && res.data?.user) {
      
       localStorage.setItem("accessToken", res.data.accessToken);
       localStorage.setItem("user", JSON.stringify(res.data.user));
@@ -23,11 +24,14 @@ function Login() {
      
       if (res.data.user.role.toLowerCase() === "student") navigate("/student-dashboard");
       else navigate("/teacher-dashboard");
+        }
 
     } catch (err) {
       setError(err.response?.data?.message || "Login failed");
     }
   };
+
+
 
   return (
     <div className="d-flex justify-content-center align-items-center vh-100 bg-light">
