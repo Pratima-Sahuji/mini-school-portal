@@ -1,71 +1,64 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import api from "./api";
-import 'bootstrap/dist/css/bootstrap.min.css';
+import api from "./api";  
 
 function Login() {
   const navigate = useNavigate();
-  const [form, setForm] = useState({ email: "", password: "" });
-  const [error, setError] = useState("");
 
-  const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
+  const [form, setForm] = useState({
+    email: "",
+    password: "",
+  });
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     try {
-      const res = await api.post("/api/user/login", form, { withCredentials: true });
-
-        if (res.data?.accessToken && res.data?.user) {
-     
-      localStorage.setItem("accessToken", res.data.accessToken);
-      localStorage.setItem("user", JSON.stringify(res.data.user));
+      const response = await axios.post(`${api}/user/login`, form);
 
      
-      if (res.data.user.role.toLowerCase() === "student") navigate("/student-dashboard");
-      else navigate("/teacher-dashboard");
-        }
-
-    } catch (err) {
-      setError(err.response?.data?.message || "Login failed");
+      if (response.data && response.data.user) {
+        localStorage.setItem("user", JSON.stringify(response.data.user));
+        localStorage.setItem("accessToken", response.data.accessToken);
+        navigate("/dashboard"); 
+      } else {
+        alert("Invalid response from server.");
+      }
+    } catch (error) {
+      console.error("Login failed:", error.response?.data || error.message);
+      alert(error.response?.data?.message || "Server error. Please try again.");
     }
   };
 
-
-
   return (
-    <div className="d-flex justify-content-center align-items-center vh-100 bg-light">
-      <div className="card p-4 shadow" style={{ width: "400px" }}>
-        <h3 className="text-center mb-3">Login</h3>
-        {error && <div className="alert alert-danger">{error}</div>}
-        <form onSubmit={handleSubmit}>
-          <div className="mb-3">
-            <label htmlFor="email" className="form-label">Email</label>
-            <input 
-              type="email" 
-              name="email" 
-              className="form-control" 
-              value={form.email} 
-              onChange={handleChange} 
-              required 
-            />
-          </div>
-          <div className="mb-3">
-            <label htmlFor="password" className="form-label">Password</label>
-            <input 
-              type="password" 
-              name="password" 
-              className="form-control" 
-              value={form.password} 
-              onChange={handleChange} 
-              required 
-            />
-          </div>
-          <button type="submit" className="btn btn-primary w-100">Login</button>
-        </form>
-      </div>
+    <div className="container mt-5">
+      <h2>Login</h2>
+      <form onSubmit={handleSubmit}>
+        <input
+          type="email"
+          className="form-control mb-3"
+          placeholder="Email"
+          value={form.email}
+          onChange={(e) => setForm({ ...form, email: e.target.value })}
+          required
+        />
+        <input
+          type="password"
+          className="form-control mb-3"
+          placeholder="Password"
+          value={form.password}
+          onChange={(e) => setForm({ ...form, password: e.target.value })}
+          required
+        />
+        <button type="submit" className="btn btn-primary w-100">
+          Login
+        </button>
+      </form>
     </div>
   );
 }
 
 export default Login;
+
