@@ -98,6 +98,7 @@ const generateTokens = (user) => {
 
 const login = async (req, res) => {
   const { email, password } = req.body;
+   console.log("Login request:", req.body);
   try {
     const userResult = await db.query("SELECT * FROM users WHERE email = $1", [email]);
     if (!userResult.rows.length)
@@ -131,6 +132,7 @@ const login = async (req, res) => {
     });
   } catch (err) {
     console.error(err);
+    console.error("Login Error:", error); 
     res.status(500).json({ message: "Server error" });
   }
 };
