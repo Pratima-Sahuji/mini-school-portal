@@ -21,35 +21,24 @@ function Signup() {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    if (!form.role) {
-      alert("Please select a role");
-      return;
-    }
-
-    try {
-      const res = await api.post(
-        "/api/user/signup",
-        form,
-        { withCredentials: true }
-      );
-
-      localStorage.setItem("user", JSON.stringify(res.data.user));
-       localStorage.setItem("accessToken", res.data.accessToken);
-
-
-
-      // Direct navigation based on role
-      if (res.data.user.role.toLowerCase() === "student") navigate("/student-dashboard");
+  e.preventDefault();
+  try {
+    const res = await axios.post(
+      "https://mini-school-portal-backend.onrender.com/api/user/signup",
+      form,
+      { headers: { "Content-Type": "application/json" } }
+    );
+    console.log("Signup success:", res.data);
+    alert("Signup successful!");
+    if (res.data.user.role.toLowerCase() === "student") navigate("/student-dashboard");
        else navigate("/teacher-dashboard");
+  } catch (err) {
+    console.error("Signup error:", err.response?.data || err.message);
+    alert("Signup failed! Check console for details.");
+  }
+};
 
 
-    } catch (err) {
-      console.error(err);
-      alert(err.response?.data?.message || "Signup failed");
-    }
-  };
 
   return (
     <div className="d-flex justify-content-center align-items-center vh-100 bg-light">
