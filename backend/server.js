@@ -12,8 +12,14 @@ const cors = require("cors");
 dotenv.config();
 const app = express();
 
-const FRONTEND_URL = process.env.FRONTEND_URL || "http://localhost:5173";
-app.use(cors({  origin: [FRONTEND_URL], credentials: true }));
+// const FRONTEND_URL = process.env.FRONTEND_URL || "http://localhost:5173";
+app.use(
+  cors({
+    origin: "https://mini-school-portal-frontend.onrender.com",
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true,
+  })
+);
 
 app.use(express.json());
 app.use(cookieParser());
