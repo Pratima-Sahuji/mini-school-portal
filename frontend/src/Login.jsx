@@ -22,7 +22,8 @@ function Login() {
       if (response.data && response.data.user) {
         localStorage.setItem("user", JSON.stringify(response.data.user));
         localStorage.setItem("accessToken", response.data.accessToken);
-        navigate("/dashboard"); 
+         if (res.data.user.role.toLowerCase() === "student") navigate("/student-dashboard");
+       else navigate("/teacher-dashboard"); 
       } else {
         alert("Invalid response from server.");
       }
